@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useReducer } from "react";
 import { Container, Menu, MenuItem } from 'semantic-ui-react'
-import { configureAnswers, evaluateAnswers, shuffle } from "../../utils/questionUtils";
+import { configureAnswers, handleQuestionChange, shuffle } from "../../utils/questionUtils";
 import QuestionForm from "./QuestionForm";
 import QuestionContext from "../contexts/QuestionContext";
 import mainReducer from '../reducers/index'
@@ -15,7 +15,6 @@ interface Question {
   incorrect_answers: string[];
 }
 
-// review types that have "any"
 interface IState {
   questions: Question[];
   currentQuestion: Question | any;
@@ -49,8 +48,7 @@ export const App = () => {
   const [state, dispatch] = useReducer(mainReducer, initialState);
   const { currentAnswer } = state;
 
-  const handleChange = (e: any, { value }: any) => {
-    e.preventDefault();
+  const handleChange = (_e: any, { value }: any) => {
     const payload = {
       currentAnswer: value,
     };
@@ -58,33 +56,7 @@ export const App = () => {
     return dispatch({ type: "ONCHANGE", payload });
   };
 
-  const updateQuestion = (e: any) => {
-    e.preventDefault();
-    let nextIdx = state.idx + 1;
-    let nextQuestion: any = state.questions[nextIdx];
-
-    if (nextQuestion === undefined || nextIdx >= state.questions.length) {
-      nextIdx = 0;
-      nextQuestion = state.questions[0];
-    }
-
-    const questionsAnswered = state.questionsAnswered + 1;
-    const evaluationPayload = evaluateAnswers(state);
-    const answers = configureAnswers(nextQuestion);
-    const payload: any = {
-      idx: nextIdx,
-      currentQuestion: nextQuestion,
-      answers,
-      questionsAnswered,
-      ...evaluationPayload,
-    };
-    // NOTE: you can change the quiz length here if needed.
-    if (questionsAnswered === 5) {
-      payload.isSummaryVisible = true;
-    }
-
-    return dispatch({ type: "NEXT_QUESTION", payload });
-  };
+  const updateQuestion = (e: any) => handleQuestionChange(e, state, dispatch)
 
 
   useEffect(() => {

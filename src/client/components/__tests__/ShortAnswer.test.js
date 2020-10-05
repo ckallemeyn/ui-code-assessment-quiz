@@ -1,10 +1,11 @@
-import React from "react";
-import { render } from "@testing-library/react";
-import ShortAnswer from "../ShortAnswer";
+import React from "react"
+import { render, fireEvent } from "@testing-library/react"
+import { screen, waitFor } from '@testing-library/dom'
+import userEvent from "@testing-library/user-event"
+import ShortAnswer from "../ShortAnswer"
 import QuestionContext from '../../contexts/QuestionContext'
 
 const renderWithContext = (value) => {
-  const updateQuestion = jest.fn();
 
   return render(
     <QuestionContext.Provider value={value}>
@@ -13,11 +14,27 @@ const renderWithContext = (value) => {
   )
 }
 
+const contextValue = {
+  currentAnswer: '',
+  handleChange: jest.fn()
+}
+
+
 describe("Short Answer", () => {
   test("it should render", () => {
-    const four = 4;
+    const { container } = renderWithContext(contextValue);
 
-    expect(four).toEqual(4);
+    expect(container).toMatchSnapshot();
   });
+
+  test('it should invoke handleChange if a user types into the input', async () => {
+    const { container } = renderWithContext(contextValue);
+    const input = container.querySelector('[data-testid="short-answer"] input');
+
+    await userEvent.type(input, 'blue')
+
+    expect(contextValue.handleChange).toHaveBeenCalled();
+  });
+
 });
 
