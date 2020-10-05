@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Short Answer it should render 1`] = `
+<div>
+  <div
+    class="ui input"
+    data-testid="short-answer"
+  >
+    <input
+      name="shortAnswer"
+      type="text"
+      value=""
+    />
+  </div>
+</div>
+`;

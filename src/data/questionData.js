@@ -1,6 +1,5 @@
 /* istanbul ignore file */
-export const questionData = [
-  {
+export const questionData = [{
     category: "Entertainment: Video Games",
     type: "multiple",
     difficulty: "easy",
@@ -50,15 +49,22 @@ export const questionData = [
     incorrect_answers: [
       "False"
     ]
-  },
+  }, {
+    category: "Science: Mathematics",
+    type: "boolean",
+    difficulty: "easy",
+    question: "The &#039;Squaring the Circle&#039; problem is solvable.",
+    correct_answer: "False",
+    incorrect_answers: [
+      "True"
+    ]
+  }
 ];
 
-export const shortAnswerData = [
-  {
-    category: "Animals",
-    type: "text",
-    difficulty: "medium",
-    question: "What color\/colour is a polar bear&#039;s skin?",
-    correct_answer: "Black"
-  },
-];
+export const shortAnswerData = [{
+  category: "Animals",
+  type: "text",
+  difficulty: "medium",
+  question: "What color\/colour is a polar bear&#039;s skin?",
+  correct_answer: "Black"
+}, ];

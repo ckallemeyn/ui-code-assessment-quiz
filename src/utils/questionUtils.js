@@ -4,7 +4,7 @@
 export const unescapeStr = (str) => {
   let parser = new DOMParser();
   let doc = parser.parseFromString(str, 'text/html');
-  
+
   return doc.body.textContent;
 }
 
@@ -69,3 +69,38 @@ export const evaluateAnswers = (state) => {
 
   return payload;
 }
+
+// moved this function for ease of testing utility methods
+export const handleQuestionChange = (e, state, dispatch) => {
+  e.preventDefault();
+  let nextIdx = state.idx + 1;
+  let nextQuestion = state.questions[nextIdx];
+
+  if (nextQuestion === undefined || nextIdx >= state.questions.length) {
+    nextIdx = 0;
+    nextQuestion = state.questions[0];
+  }
+
+  const questionsAnswered = state.questionsAnswered + 1;
+  const evaluationPayload = evaluateAnswers(state);
+  const answers = configureAnswers(nextQuestion);
+  const payload = {
+    idx: nextIdx,
+    currentQuestion: nextQuestion,
+    answers,
+    questionsAnswered,
+    ...evaluationPayload,
+  };
+  // NOTE: you can change the quiz length here if needed.
+  console.log('what is the type of questionsAnswered', typeof questionsAnswered)
+  console.log(questionsAnswered)
+  if (questionsAnswered === 5) {
+    payload.isSummaryVisible = true;
+  }
+
+  return dispatch({
+    type: "NEXT_QUESTION",
+    payload
+  });
+};
+
