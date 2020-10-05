@@ -12,6 +12,9 @@ beforeEach(() => {
   }));
 })
 
+global.console = { error: jest.fn() }
+
+
 const renderWithContext = (value) => {
   return render(
     <QuestionContext.Provider value={value}>
@@ -83,6 +86,13 @@ describe('Main App Component', () => {
       expect(nextBtn.getAttribute('disabled')).toBe(null);
     })
   });
+
+  test('it should log an error to the console', async () => {
+    global.fetch = jest.fn(() => Promise.reject(global.console.error()));
+    await act(async () => renderWithContext(contextValue))
+
+    expect(console.error).toHaveBeenCalled();
+  })
 
 
 })

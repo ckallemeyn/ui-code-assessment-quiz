@@ -15,7 +15,6 @@ interface Question {
   incorrect_answers: string[];
 }
 
-// review types that have "any"
 interface IState {
   questions: Question[];
   currentQuestion: Question | any;
