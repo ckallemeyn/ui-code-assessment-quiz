@@ -92,8 +92,6 @@ export const handleQuestionChange = (e, state, dispatch) => {
     ...evaluationPayload,
   };
   // NOTE: you can change the quiz length here if needed.
-  console.log('what is the type of questionsAnswered', typeof questionsAnswered)
-  console.log(questionsAnswered)
   if (questionsAnswered === 5) {
     payload.isSummaryVisible = true;
   }
