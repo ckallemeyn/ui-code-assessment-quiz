@@ -125,7 +125,6 @@ describe('Utility Methods', () => {
     });
 
     test('it should go to the beginning of the questions list if currently on the last question', () => {
-      console.log('what is question data lenght', questionData.length)
       const e = {
         preventDefault: jest.fn()
       }
